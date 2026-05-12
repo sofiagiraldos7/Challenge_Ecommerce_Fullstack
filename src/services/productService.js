@@ -1,18 +1,37 @@
-import MOCK_PRODUCTS from "../mockdata/mock_products";
+import axios from "axios";
+
+const API_BASE = "https://fakestoreapi.com";
+
+// Normaliza el shape de FakeStore para que coincida con el contrato
+// que ya consumen los componentes (mismo shape que mock_products).
+const normalizeProduct = (p) => ({
+  id: p.id,
+  title: p.title,
+  description: p.description,
+  price: Number(p.price).toFixed(2), // string "19.99" como en el mock
+  rate: p?.rating?.rate ?? 0,
+  image: p.image,
+  category: p.category, // bonus: útil si luego haces filtros por categoría
+});
 
 export const getProducts = async () => {
-  // TODO ESTUDIANTE:
-  // Reemplaza este retorno local por FakeStore API.
-  // Ejemplo esperado: GET https://fakestoreapi.com/products
-  return [...MOCK_PRODUCTS].sort((a, b) => Number(a.id) - Number(b.id));
+  try {
+    const { data } = await axios.get(`${API_BASE}/products`);
+    return data
+      .map(normalizeProduct)
+      .sort((a, b) => Number(a.id) - Number(b.id));
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
 };
 
 export const getProductById = async (id) => {
-  // TODO ESTUDIANTE:
-  // Reemplaza esta busqueda local por FakeStore API.
-  // Ejemplo esperado: GET https://fakestoreapi.com/products/{id}
-  const product = MOCK_PRODUCTS.find(
-    (item) => Number(item.id) === Number(id),
-  );
-  return product ?? null;
+  try {
+    const { data } = await axios.get(`${API_BASE}/products/${id}`);
+    return data ? normalizeProduct(data) : null;
+  } catch (error) {
+    console.error(`Error fetching product ${id}:`, error);
+    return null;
+  }
 };
