@@ -1,5 +1,6 @@
-import { Outlet } from 'react-router-dom';
-import NavBar from '../organisms/NavBar/NavBar';
+import { Outlet } from "react-router-dom";
+import NavBar from "../organisms/NavBar/NavBar";
+import Footer from "../organisms/Footer/Footer";
 
 export default function Layout() {
   return (
@@ -8,6 +9,7 @@ export default function Layout() {
       <main className="flex-1 w-full">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
