@@ -1,22 +1,30 @@
 import { Link } from "react-router-dom";
 import useCartStore from "../../../store/cartStore";
-import { imageMap } from "../../../assets/imageMap";
+
+const SHIPPING_THRESHOLD = 50; // envío gratis sobre $50
+const SHIPPING_COST = 5.99;
+const TAX_RATE = 0.19; // IVA 19%
 
 export default function Cart() {
-  // TODO ESTUDIANTE: agregar cupones, envio y resumen con impuestos.
   const items = useCartStore((state) => state.items);
   const incrementItem = useCartStore((state) => state.incrementItem);
   const decrementItem = useCartStore((state) => state.decrementItem);
   const removeItem = useCartStore((state) => state.removeItem);
   const getTotalPrice = useCartStore((state) => state.getTotalPrice);
 
-  const total = getTotalPrice();
+  const subtotal = getTotalPrice();
+  const totalItems = items.reduce((acc, it) => acc + Number(it.quantity), 0);
+  const shipping = subtotal >= SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_COST;
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + shipping + tax;
 
   if (items.length === 0) {
     return (
       <section className="max-w-4xl mx-auto px-4 py-12">
         <div className="bg-white rounded-2xl border border-gray-200 p-10 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Tu carrito esta vacio</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Tu carrito esta vacio
+          </h2>
           <p className="text-gray-500 mb-6">
             Agrega productos desde la galeria para iniciar la compra.
           </p>
@@ -33,22 +41,32 @@ export default function Cart() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Carrito de compras</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-6">
+        Carrito de compras
+      </h2>
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
         <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
           {items.map(({ product, quantity }) => {
-            const resolvedImage = imageMap[product.image] ?? product.image;
             const itemSubtotal = Number(product.price) * Number(quantity);
             return (
-              <article key={product.id} className="p-4 flex gap-4 items-center">
-                <img
-                  src={resolvedImage}
-                  alt={product.title}
-                  className="w-20 h-20 object-cover rounded-lg border border-gray-200"
-                />
+              <article
+                key={product.id}
+                className="p-4 flex flex-col sm:flex-row gap-4 sm:items-center"
+              >
+                <div className="w-20 h-20 bg-white border border-gray-200 rounded-lg flex items-center justify-center shrink-0">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-900 truncate">{product.title}</h3>
-                  <p className="text-sm text-gray-500">${Number(product.price).toFixed(2)} c/u</p>
+                  <h3 className="font-semibold text-gray-900 line-clamp-2">
+                    {product.title}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    ${Number(product.price).toFixed(2)} c/u
+                  </p>
                   <p className="text-sm font-semibold text-gray-800 mt-1">
                     Subtotal: ${itemSubtotal.toFixed(2)}
                   </p>
@@ -61,7 +79,9 @@ export default function Cart() {
                   >
                     -
                   </button>
-                  <span className="w-8 text-center text-sm font-semibold">{quantity}</span>
+                  <span className="w-8 text-center text-sm font-semibold">
+                    {quantity}
+                  </span>
                   <button
                     type="button"
                     onClick={() => incrementItem(product.id)}
@@ -84,14 +104,44 @@ export default function Cart() {
 
         <aside className="bg-white rounded-2xl border border-gray-200 p-6 h-fit">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Resumen</h3>
-          <div className="flex justify-between text-gray-600 mb-3">
-            <span>Productos</span>
-            <span>{items.length}</span>
+
+          <div className="space-y-3 mb-4">
+            <div className="flex justify-between text-gray-600">
+              <span>Productos</span>
+              <span>{totalItems}</span>
+            </div>
+            <div className="flex justify-between text-gray-600">
+              <span>Subtotal</span>
+              <span>${subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-gray-600">
+              <span>Envio</span>
+              <span>
+                {shipping === 0 ? (
+                  <span className="text-green-600 font-medium">Gratis</span>
+                ) : (
+                  "$" + shipping.toFixed(2)
+                )}
+              </span>
+            </div>
+            <div className="flex justify-between text-gray-600">
+              <span>IVA (19%)</span>
+              <span>${tax.toFixed(2)}</span>
+            </div>
           </div>
-          <div className="flex justify-between text-lg font-bold text-gray-900 mb-6">
+
+          {subtotal < SHIPPING_THRESHOLD && subtotal > 0 && (
+            <div className="text-xs text-gray-500 bg-purple-50 border border-purple-100 rounded-lg p-3 mb-4">
+              Agrega ${(SHIPPING_THRESHOLD - subtotal).toFixed(2)} mas y obten
+              envio gratis.
+            </div>
+          )}
+
+          <div className="flex justify-between text-lg font-bold text-gray-900 mb-6 pt-4 border-t border-gray-200">
             <span>Total</span>
             <span>${total.toFixed(2)}</span>
           </div>
+
           <Link
             to="/checkout"
             className="w-full inline-flex justify-center px-4 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90"
