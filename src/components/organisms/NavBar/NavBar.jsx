@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { subscribeToAuthChanges } from '../../../services/authService';
 import useCartStore from '../../../store/cartStore';
+import SearchBar from "../../molecules/SearchBar";  
 
 export default function NavBar() {
   const location = useLocation();
@@ -35,16 +36,21 @@ export default function NavBar() {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-16 gap-4">
           {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center space-x-2 text-2xl font-bold hover:opacity-80 transition-opacity"
+            className="flex items-center space-x-2 text-2xl font-bold hover:opacity-80 transition-opacity shrink-0"
           >
             <span className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
               MyStore
             </span>
           </Link>
+
+          {/* SearchBar in Navbar */}
+          <div className="hidden md:flex flex-1 max-w-md mx-4">
+            <SearchBar placeholder="Buscar productos..." />
+          </div>
 
           {/* Navigation Links */}
           <ul className="hidden md:flex items-center space-x-8">
