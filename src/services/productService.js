@@ -35,15 +35,3 @@ export const getProductById = async (id) => {
     return null;
   }
 };
-
-export const getCategories = async () => {
-  try {
-    const response = await fetch(${API_BASE}/products/categories);
-    if (!response.ok) throw new Error(HTTP ${response.status});
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    return [];
-  }
-};
