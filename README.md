@@ -1,5 +1,14 @@
 # 🛍️ Reto Desarrollador Fullstack
 
+Mi entrega — Sofia Giraldo Sánchez
+sgiraldos1@eafit.edu.co
+
+_Curso:_ Desarrollo Full Stack — Entrega N°2: React
+_Autora:_ Sofia Giraldo Sánchez
+
+_Repositorio:_ [Challenge_Ecommerce_Fullstack](https://github.com/sofiagiraldos7/Challenge_Ecommerce_Fullstack)
+_Demo en vivo:_ [https://sofiagiraldos7.github.io/Challenge_Ecommerce_Fullstack/](https://sofiagiraldos7.github.io/Challenge_Ecommerce_Fullstack/)
+
 Reto para practicar las habilidades de un desarrollador fullstack moderno.
 
 > Este repositorio es el punto de partida. Clona este proyecto y usa su contenido como base para desarrollar paso a paso.
@@ -31,6 +40,7 @@ Reto para practicar las habilidades de un desarrollador fullstack moderno.
 ## <img src="https://flagcdn.com/w40/co.png" width="30"> Menú de contenido
 
 ### Instrucciones en Español
+
 - [Enunciado](#es-enunciado)
 - [Funcionalidades](#es-funcionalidades)
 - [Tecnologías Requeridas](#es-tecnologías-requeridas)
@@ -40,6 +50,7 @@ Reto para practicar las habilidades de un desarrollador fullstack moderno.
 - [Instrucciones de uso](#es-instrucciones-de-uso)
 
 ### English Menu of Contents
+
 - [Statement](#en-statement)
 - [Features](#en-features)
 - [Required Technologies](#en-required-technologies)
@@ -75,6 +86,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 ---
 
 ## <img src="https://flagcdn.com/w40/co.png" width="30"> Funcionalidades
+
 - ✅ Registro de usuarios y sesión persistente
 - ✅ Galería dinámica de productos
 - ✅ Búsqueda en tiempo real
@@ -94,10 +106,13 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 ---
 
 ## <img src="https://flagcdn.com/w40/co.png" width="30"> Instrucciones de uso
+
 1. Clone el repositorio
-  ```bash
-  git clone https://github.com/xaca/reto_fullstack.git
-  ```
+
+```bash
+git clone https://github.com/xaca/reto_fullstack.git
+```
+
 2. Borra la carpeta .git para evitar confusiones con los commits
    ```bash
    rm -rf .git
@@ -116,7 +131,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
     git remote add origin [url_de_tu_repositorio]
     git branch -M main
     git push -u origin main
-    ```
+   ```
 6. Instala las dependencias:
    ```bash
    npm install
@@ -132,6 +147,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 ## <img src="https://flagcdn.com/w40/co.png" width="30"> Instrucciones Paso a Paso
 
 ### Paso 1: Selecciona una Plantilla de Referencia
+
 - Visita https://themewagon.com/ y busca una plantilla de tienda online (ecommerce template).
 - Descarga una plantilla que te guste (puede ser gratuita).
 - Estudia su estructura HTML, estilos CSS y diseño responsivo.
@@ -139,6 +155,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Primer commit: "docs: template de referencia seleccionada"
 
 ### Paso 2: Configuración del Proyecto
+
 - Usa este repositorio como base para tu proyecto. Revisa la estructura existente y confirma que la aplicación corre antes de cambiarla.
 - Instala las dependencias necesarias:
   ```bash
@@ -148,6 +165,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Primer commit: "feat: proyecto inicial con React y Tailwind"
 
 ### Paso 3: Crear Datos Simulados (Mockdata)
+
 - Crea una carpeta `src/mockdata/` con archivos para datos de ejemplo.
 - Define mockdata para:
   - **Productos**: `products.js` (lista de productos con id, nombre, precio, descripción, imagen)
@@ -157,13 +175,20 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
   ```javascript
   // src/mockdata/products.js
   export const mockProducts = [
-    { id: 1, name: 'Producto 1', price: 29.99, description: '...', category: 'electronics' },
+    {
+      id: 1,
+      name: "Producto 1",
+      price: 29.99,
+      description: "...",
+      category: "electronics",
+    },
     // más productos...
   ];
   ```
 - Commits: "feat: mockdata de productos", "feat: mockdata de usuarios"
 
 ### Paso 4: Estructura de Componentes (Atomic Design)
+
 - Crea la estructura de carpetas siguiendo atomic design:
   ```
   src/
@@ -185,6 +210,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: estructura de componentes atómicos", "feat: componentes molecules", "feat: componentes organisms"
 
 ### Paso 5: Gestión de Estado con Zustand
+
 - Crea `src/store/productStore.js` para gestionar:
   - Lista de productos
   - Productos filtrados
@@ -194,20 +220,23 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
   - Total del carrito
   - Funciones para agregar/quitar productos
 - Ejemplo estructura:
+
   ```javascript
   // src/store/productStore.js
-  import { create } from 'zustand';
-  
+  import { create } from "zustand";
+
   export const useProductStore = create((set) => ({
     products: [],
     setProducts: (products) => set({ products }),
     // más acciones...
   }));
   ```
+
 - Implementa persistencia en localStorage usando `zustand` middleware.
 - Commits: "feat: store de productos con Zustand", "feat: store del carrito con persistencia"
 
 ### Paso 6: Galería de Productos con Mockdata
+
 - Crea el componente `organisms/ProductGallery.jsx`.
 - Usa mockdata para llenar la galería inicialmente.
 - Muestra productos en grid responsivos usando Tailwind (cards con imagen, nombre, precio).
@@ -215,6 +244,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: galería de productos", "feat: integración con store de productos"
 
 ### Paso 7: Carrito de Compras
+
 - Crea el componente `organisms/ShoppingCart.jsx`.
 - Muestra items del carrito desde el store de Zustand.
 - Implementa botones para aumentar/disminuir cantidad y eliminar productos.
@@ -222,17 +252,20 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: vista del carrito", "feat: funcionalidad de carrito completa"
 
 ### Paso 8: Implementar Búsqueda de Productos
+
 - Agrega un input de búsqueda en el Header.
 - Filtra productos en mockdata basado en término de búsqueda.
 - Actualiza la galería en tiempo real mientras se escribe.
 - Commits: "feat: búsqueda de productos", "feat: búsqueda en tiempo real"
 
 ### Paso 9: Paginación
+
 - Divide la galería de productos en páginas (ej: 6-8 productos por página).
 - Agrega componentes de navegación (botones anterior/siguiente, números de página).
 - Commits: "feat: paginación de productos"
 
 ### Paso 10: Registro y Sesión de Usuarios
+
 - Crea formulario de registro usando mockdata de usuarios.
 - Implementa almacenamiento de sesión actual en el store (Zustand + localStorage).
 - Muestra nombre del usuario logueado en el Header.
@@ -240,12 +273,14 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: registro de usuarios", "feat: sesión de usuario con persistencia"
 
 ### Paso 11: Previsualización de Checkout
+
 - Crea una nueva página/vista pour review antes de compra.
 - Muestra resumen del carrito, datos del usuario, total a pagar.
 - Agrega botón para confirmar compra (limpia carrito al confirmar).
 - Commits: "feat: previsualización de checkout"
 
 ### Paso 12: Diseño Responsivo Completo
+
 - Verifica que toda la aplicación funcione en:
   - Desktop (1920px+)
   - Tablet (768px - 1024px)
@@ -254,6 +289,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "fix: responsive design en móvil", "fix: responsive design en tablet"
 
 ### Paso 13: Conectar API Real (Opcional)
+
 - Una vez que todo funciona con mockdata, reemplaza con la API real: https://fake-store-api-docs.vercel.app/
 - Endpoints disponibles:
   - `GET /products` - Obtener todos los productos
@@ -267,6 +303,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: integración con FakeStore API", "refactor: reemplazar mockdata con endpoints reales"
 
 ### Paso 14: Firebase (BONUS)
+
 - Si quieres ir más allá, integra Firebase:
   - Authentication para registro/login más robusto.
   - Firestore para persistencia en la nube.
@@ -274,6 +311,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 - Commits: "feat: integración con Firebase Authentication", "feat: Firestore para persistencia"
 
 ### Paso 15: Pruebas y Deploy
+
 - Prueba toda la funcionalidad en diferentes navegadores.
 - Optimiza imágenes y bundle size.
 - Deploy en Vercel o Netlify.
@@ -311,10 +349,13 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
 ---
 
 ## 🇪🇸 Instrucciones de uso
+
 1. Clone el repositorio
-  ```bash
-  git clone https://github.com/xaca/reto_fullstack.git
-  ```
+
+```bash
+git clone https://github.com/xaca/reto_fullstack.git
+```
+
 2. Borra la carpeta .git para evitar confusiones con los commits
    ```bash
    rm -rf .git
@@ -333,7 +374,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
     git remote add origin
     git branch -M main
     git push -u origin main
-    ```
+   ```
 6. Instala las dependencias:
    ```bash
    npm install
@@ -343,7 +384,7 @@ Se permite reutilizar código de internet, citando las fuentes. El trabajo es in
    npm run dev
    ```
 8. Inicializar Base de Datos (Seeder)
-   - Un **Seeder** es un script automático que "siembra" o llena una base de datos vacía con información útil para que la aplicación sea funcional desde el inicio, ideal para arrancar este reto con datos de prueba pre-cargados. 
+   - Un **Seeder** es un script automático que "siembra" o llena una base de datos vacía con información útil para que la aplicación sea funcional desde el inicio, ideal para arrancar este reto con datos de prueba pre-cargados.
    - Este paso es **opcional** y solo aplica si decides usar Firebase (bonus).
    - Ejecuta el siguiente comando para registrar automáticamente los productos de prueba en Firestore (asegura tener tu archivo `src/firebase/firebase.config.js` con credenciales reales):
    ```bash
@@ -377,6 +418,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## <img src="https://flagcdn.com/w40/us.png" width="30"> Features
+
 - ✅ User registration and persistent session
 - ✅ Dynamic product gallery
 - ✅ Real-time search
@@ -396,10 +438,13 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## <img src="https://flagcdn.com/w40/us.png" width="30"> How to use
+
 1. Clone the repository
-  ```bash
-  git clone https://github.com/xaca/reto_fullstack.git
-   ```
+
+```bash
+git clone https://github.com/xaca/reto_fullstack.git
+```
+
 3. Removes .git folder to avoid confusion with commits
    ```bash
    rm -rf .git
@@ -418,7 +463,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
     git remote add origin [url_of_your_repository]
     git branch -M main
     git push -u origin main
-    ```
+   ```
 7. Install dependencies:
    ```bash
    npm install
@@ -439,6 +484,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ## <img src="https://flagcdn.com/w40/us.png" width="30"> Step by Step Instructions
 
 ### Step 1: Select a Reference Template
+
 - Visit https://themewagon.com/ and search for an online store template (ecommerce template).
 - Download a template you like (can be free).
 - Study its HTML structure, CSS styles, and responsive design.
@@ -446,6 +492,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - First commit: "docs: reference template selected"
 
 ### Step 2: Project Setup
+
 - Use this repository as the base for your project. Review the existing structure and make sure the app runs before you change it.
 - Install necessary dependencies:
   ```bash
@@ -455,6 +502,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - First commit: "feat: initial project with React and Tailwind"
 
 ### Step 3: Create Mock Data
+
 - Create a folder `src/mockdata/` with files for example data.
 - Define mockdata for:
   - **Products**: `products.js` (list of products with id, name, price, description, image)
@@ -464,13 +512,20 @@ Reusing code from the internet is allowed, citing sources. The work is individua
   ```javascript
   // src/mockdata/products.js
   export const mockProducts = [
-    { id: 1, name: 'Product 1', price: 29.99, description: '...', category: 'electronics' },
+    {
+      id: 1,
+      name: "Product 1",
+      price: 29.99,
+      description: "...",
+      category: "electronics",
+    },
     // more products...
   ];
   ```
 - Commits: "feat: product mockdata", "feat: user mockdata"
 
 ### Step 4: Component Structure (Atomic Design)
+
 - Create the folder structure following atomic design:
   ```
   src/
@@ -492,6 +547,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: atomic component structure", "feat: molecule components", "feat: organism components"
 
 ### Step 5: State Management with Zustand
+
 - Create `src/store/productStore.js` to manage:
   - Product list
   - Filtered products
@@ -501,20 +557,23 @@ Reusing code from the internet is allowed, citing sources. The work is individua
   - Cart total
   - Functions to add/remove products
 - Example structure:
+
   ```javascript
   // src/store/productStore.js
-  import { create } from 'zustand';
-  
+  import { create } from "zustand";
+
   export const useProductStore = create((set) => ({
     products: [],
     setProducts: (products) => set({ products }),
     // more actions...
   }));
   ```
+
 - Implement persistence in localStorage using `zustand` middleware.
 - Commits: "feat: product store with Zustand", "feat: cart store with persistence"
 
 ### Step 6: Product Gallery with Mockdata
+
 - Create the component `organisms/ProductGallery.jsx`.
 - Use mockdata to fill the gallery initially.
 - Display products in responsive grid using Tailwind (cards with image, name, price).
@@ -522,6 +581,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: product gallery", "feat: integration with product store"
 
 ### Step 7: Shopping Cart
+
 - Create the component `organisms/ShoppingCart.jsx`.
 - Display cart items from the Zustand store.
 - Implement buttons to increase/decrease quantity and remove products.
@@ -529,17 +589,20 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: cart view", "feat: complete cart functionality"
 
 ### Step 8: Implement Product Search
+
 - Add a search input in the Header.
 - Filter products in mockdata based on search term.
 - Update the gallery in real-time as you type.
 - Commits: "feat: product search", "feat: real-time search"
 
 ### Step 9: Pagination
+
 - Divide the product gallery into pages (e.g.: 6-8 products per page).
 - Add navigation components (previous/next buttons, page numbers).
 - Commits: "feat: product pagination"
 
 ### Step 10: User Registration and Session
+
 - Create registration form using user mockdata.
 - Implement storage of current session in the store (Zustand + localStorage).
 - Display logged-in user name in the Header.
@@ -547,12 +610,14 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: user registration", "feat: user session with persistence"
 
 ### Step 11: Checkout Preview
+
 - Create a new page/view for review before purchase.
 - Show cart summary, user data, total to pay.
 - Add button to confirm purchase (clears cart on confirm).
 - Commits: "feat: checkout preview"
 
 ### Step 12: Complete Responsive Design
+
 - Verify that the entire application works on:
   - Desktop (1920px+)
   - Tablet (768px - 1024px)
@@ -561,6 +626,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "fix: responsive design on mobile", "fix: responsive design on tablet"
 
 ### Step 13: Connect Real API (Optional)
+
 - Once everything works with mockdata, replace with the real API: https://fake-store-api-docs.vercel.app/
 - Available endpoints:
   - `GET /products` - Get all products
@@ -574,6 +640,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: integration with FakeStore API", "refactor: replace mockdata with real endpoints"
 
 ### Step 14: Firebase (BONUS)
+
 - If you want to go further, integrate Firebase:
   - Authentication for more robust registration/login.
   - Firestore for cloud persistence.
@@ -581,6 +648,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 - Commits: "feat: integration with Firebase Authentication", "feat: Firestore for persistence"
 
 ### Step 15: Testing and Deploy
+
 - Test all functionality in different browsers.
 - Optimize images and bundle size.
 - Deploy on Vercel or Netlify.
@@ -618,10 +686,13 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## 🇬🇧 How to use
+
 1. Clone the repository
-  ```bash
-  git clone https://github.com/xaca/reto_fullstack.git
-   ```
+
+```bash
+git clone https://github.com/xaca/reto_fullstack.git
+```
+
 3. Removes .git folder to avoid confusion with commits
    ```bash
    rm -rf .git
@@ -640,7 +711,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
     git remote add origin
     git branch -M main
     git push -u origin main
-    ```
+   ```
 7. Install dependencies:
    ```bash
    npm install
@@ -659,6 +730,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## 🇬🇧 Features
+
 - ✅ User registration and persistent session
 - ✅ Dynamic product gallery
 - ✅ Real-time search
@@ -669,6 +741,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## 🇬🇧 Technologies
+
 - React
 - Tailwind CSS
 - Zustand
@@ -678,6 +751,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## 🇬🇧 Work Plan
+
 1. **Project setup**
    - Create React project with Vite
    - Configure Tailwind CSS
@@ -709,10 +783,11 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## 🇬🇧 How to use
+
 1. Clone the repository
    ```bash
    git clone https://github.com/xaca/reto_fullstack.git
-    ```
+   ```
 2. Install dependencies:
    ```bash
    npm install
@@ -732,6 +807,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ---
 
 ## Recursos
+
 - `https://fakestoreapi.com/`
 - `https://react.dev/`
 - `https://tailwindcss.com/`
@@ -749,6 +825,7 @@ Reusing code from the internet is allowed, citing sources. The work is individua
 ✅ **Firebase es bonus**: Enfócate primero en que todo funcione con localStorage.
 
 ## Información de Interés
+
 - **Videos de React**: [Lista de reproducción de la clase](https://www.youtube.com/watch?v=YEe_VLjWAeY&list=PLQ1ShaTNqthJHS5mDcxoR1Z68ljLDYm-A)
 - **Documentación de React**: https://react.dev/
 - **Tailwind CSS**: https://tailwindcss.com/
