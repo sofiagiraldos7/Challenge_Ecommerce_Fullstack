@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById } from '../../../services/productService';
-import { imageMap } from '../../../assets/imageMap';
 import useCartStore from '../../../store/cartStore';
+import useToastStore from '../../../store/toastStore';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -10,9 +10,9 @@ export default function ProductDetail() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
-    const [added, setAdded] = useState(false);
 
     const addItem = useCartStore((state) => state.addItem);
+    const showToast = useToastStore((state) => state.showToast);
 
     useEffect(() => {
         getProductById(id).then((data) => {
@@ -23,8 +23,10 @@ export default function ProductDetail() {
 
     const handleAddToCart = () => {
         addItem(product, quantity);
-        setAdded(true);
-        setTimeout(() => setAdded(false), 2000);
+        const message = quantity > 1
+            ? quantity + " productos agregados al carrito"
+            : "Producto agregado al carrito";
+        showToast(message, "success");
     };
 
     const renderStars = (rate) => {
@@ -57,8 +59,6 @@ export default function ProductDetail() {
         );
     }
 
-    const resolvedImage = imageMap[product.image] ?? product.image;
-
     return (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             {/* Back button */}
@@ -75,12 +75,14 @@ export default function ProductDetail() {
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div className="md:flex">
                     {/* Image */}
-                    <div className="md:w-1/2 relative">
-                        <img
-                            src={resolvedImage}
-                            alt={product.title}
-                            className="w-full h-80 md:h-full object-cover"
-                        />
+                    <div className="md:w-1/2 relative bg-white">
+                        <div className="w-full h-80 md:h-full flex items-center justify-center p-8">
+                            <img
+                                src={product.image}
+                                alt={product.title}
+                                className="max-w-full max-h-full object-contain"
+                            />
+                        </div>
                         <div className="absolute top-4 left-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                             NUEVO
                         </div>
@@ -134,13 +136,9 @@ export default function ProductDetail() {
                             {/* Add to cart button */}
                             <button
                                 onClick={handleAddToCart}
-                                className={`w-full py-3 rounded-xl font-semibold text-white text-lg transition-all duration-300 ${
-                                    added
-                                        ? 'bg-green-500 scale-95'
-                                        : 'bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 hover:opacity-90 hover:shadow-lg hover:shadow-purple-200 active:scale-95'
-                                }`}
+                                className="w-full py-3 rounded-xl font-semibold text-white text-lg bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 hover:opacity-90 hover:shadow-lg hover:shadow-purple-200 active:scale-95 transition-all duration-300"
                             >
-                                {added ? '✓ Agregado al carrito' : 'Agregar al carrito'}
+                                Agregar al carrito
                             </button>
                         </div>
                     </div>
