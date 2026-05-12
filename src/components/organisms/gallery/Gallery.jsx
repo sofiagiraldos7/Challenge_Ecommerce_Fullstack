@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../../molecules/ProductCard";
+import SearchBar from "../../molecules/SearchBar";
 import { getProducts } from "../../../services/productService";
+import useSearchStore from "../../../store/searchStore";
 
-const ITEMS_PER_PAGE = 4;
-// TODO ESTUDIANTE: ajusta items por pagina y mejora UX de filtros/categorias.
+const ITEMS_PER_PAGE = 8;
 
 export default function Gallery() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const searchTerm = useSearchStore((state) => state.searchTerm);
 
   useEffect(() => {
     getProducts().then((data) => {
@@ -18,8 +20,14 @@ export default function Gallery() {
     });
   }, []);
 
+  // Reset to page 1 when search changes (render-phase update)
+  const [prevSearchTerm, setPrevSearchTerm] = useState(searchTerm);
+  if (searchTerm !== prevSearchTerm) {
+    setPrevSearchTerm(searchTerm);
+    setCurrentPage(1);
+  }
+
   const filteredProducts = useMemo(() => {
-    // TODO ESTUDIANTE: extender busqueda por categoria y precio.
     const normalized = searchTerm.trim().toLowerCase();
     if (!normalized) return products;
 
@@ -34,11 +42,6 @@ export default function Gallery() {
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const visibleProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
 
   const goToPage = (page) => {
     setCurrentPage(page);
@@ -59,15 +62,17 @@ export default function Gallery() {
           <h2 className="text-2xl font-bold">Nuestros Productos</h2>
           <p className="text-sm text-gray-500 mt-1">
             {filteredProducts.length} resultado(s)
+            {searchTerm && (
+              <span className="ml-1">
+                para "<span className="font-medium text-purple-600">{searchTerm}</span>"
+              </span>
+            )}
           </p>
         </div>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Buscar por nombre o descripción..."
-          className="w-full sm:w-80 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-500"
-        />
+        {/* Mobile-only search (Navbar version is hidden on mobile) */}
+        <div className="md:hidden w-full">
+          <SearchBar placeholder="Buscar por nombre o descripción..." />
+        </div>
       </div>
 
       {filteredProducts.length === 0 ? (
