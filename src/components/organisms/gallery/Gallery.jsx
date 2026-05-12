@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../../molecules/ProductCard";
 import SearchBar from "../../molecules/SearchBar";
+import CategoryFilter from "../../molecules/CategoryFilter";
 import { getProducts } from "../../../services/productService";
 import useSearchStore from "../../../store/searchStore";
+import useCategoryStore from "../../../store/categoryStore";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -12,6 +14,7 @@ export default function Gallery() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const searchTerm = useSearchStore((state) => state.searchTerm);
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
 
   useEffect(() => {
     getProducts().then((data) => {
@@ -20,32 +23,37 @@ export default function Gallery() {
     });
   }, []);
 
-  // Reset to page 1 when search changes (render-phase update)
-  const [prevSearchTerm, setPrevSearchTerm] = useState(searchTerm);
-  if (searchTerm !== prevSearchTerm) {
-    setPrevSearchTerm(searchTerm);
+  // Reset to page 1 when search or category changes
+  useEffect(() => {
     setCurrentPage(1);
-  }
+  }, [searchTerm, selectedCategory]);
 
   const filteredProducts = useMemo(() => {
-    const normalized = searchTerm.trim().toLowerCase();
-    if (!normalized) return products;
+    let result = products;
 
-    return products.filter((product) => {
-      return (
-        product.title.toLowerCase().includes(normalized) ||
-        product.description.toLowerCase().includes(normalized)
+    // Filter by category
+    if (selectedCategory && selectedCategory !== "all") {
+      result = result.filter((p) => p.category === selectedCategory);
+    }
+
+    // Filter by search term
+    const normalized = searchTerm.trim().toLowerCase();
+    if (normalized) {
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(normalized) ||
+          p.description.toLowerCase().includes(normalized)
       );
-    });
-  }, [products, searchTerm]);
+    }
+
+    return result;
+  }, [products, searchTerm, selectedCategory]);
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const visibleProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
+  const goToPage = (page) => setCurrentPage(page);
 
   if (loading) {
     return (
@@ -69,11 +77,12 @@ export default function Gallery() {
             )}
           </p>
         </div>
-        {/* Mobile-only search (Navbar version is hidden on mobile) */}
         <div className="md:hidden w-full">
           <SearchBar placeholder="Buscar por nombre o descripción..." />
         </div>
       </div>
+
+      <CategoryFilter />
 
       {filteredProducts.length === 0 ? (
         <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-500">
