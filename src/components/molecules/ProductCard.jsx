@@ -9,7 +9,7 @@ function ProductCard({ product }) {
     const resolvedImage = imageMap[product.image] ?? product.image;
 
     return (
-        <Link to={`/product/${product.id}`} className="block border rounded-lg p-4 shadow-md w-[180px] m-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <Link to={`/product/${product.id}`} className="block border rounded-lg p-4 shadow-md w-[220px] m-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white">
             <ProductImage src={resolvedImage} alt={product.title}  />
             <ProductTitle title={product.title} />
             <ProductPrice price={product.price} />
