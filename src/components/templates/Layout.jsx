@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../organisms/NavBar/NavBar";
 import Footer from "../organisms/Footer/Footer";
+import Toast from "../molecules/Toast";
 
 export default function Layout() {
   return (
@@ -10,6 +11,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <Toast />
     </div>
   );
 }
